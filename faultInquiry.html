@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>故障查询</title>
+</head>
+    <body class="faultInquiry-body-wrapper">
+    <div class="login-logo">
+        <img src="img/logo.png" alt="190*184">
+    </div>
+    <div class="weui-search-bar faultInquiry-search-bar" id="searchBar">
+        <form class="weui-search-bar__form ">
+            <div class="weui-search-bar__box faultInquiry-search-bar__box">
+                <i class="faultInquiry-icon">
+                    <img src="img/fault-icon-code.png" alt="44*38">
+                </i>
+                <input type="search" class="weui-search-bar__input  faultInquiry-search-bar__input" id="code_search" placeholder="请输入代码查询" required="">
+            </div>
+        </form>
+        <a id="code_query" class="weui-btn_layout weui-btn">查询</a>
+    </div>
+
+    <ul class="faultInquiry-list" id="code_tip">
+       
+    </ul>
+
+    <div class="weui-search-bar faultInquiry-search-bar" id="searchBar">
+        <form class="weui-search-bar__form ">
+            <div class="weui-search-bar__box faultInquiry-search-bar__box">
+                <i class="faultInquiry-icon-book">
+                    <img src="img/fault-icon-book.png" alt="40*44">
+                </i>
+                <input type="search" class="weui-search-bar__input  faultInquiry-search-bar__input" id="desc_search" placeholder="请输入中文描述查询">
+            </div>
+        </form>
+        <a id="desc_query" class="weui-btn_layout weui-btn">查询</a>
+    </div>
+    <ul class="faultInquiry-list" id='desc_tip'>
+     
+    </ul>
+
+    <script>
+    $(function(){
+        desc_tip();
+        code_tip();
+        
+        $('#code_query').click(function(){
+            if (!getcookie('QCUSS')) {
+                $(window).attr('location','/login.html');
+                return
+            }
+
+           var res=$('#code_search').val()
+           if(res==''){
+                // alert('请输入要查询的代码!');
+                $.showDialog({
+                    title: "请输入要查询的代码!",
+                    type: "alert"
+                }); 
+                $('#code_search').focus();
+                return false;
+           }
+           $(window).attr('location','/faultInquiryList.html?search_code='+res);
+        })
+
+        $('#desc_query').click(function(){
+            if (!getcookie('QCUSS')) {
+                $(window).attr('location','/login.html');
+                return
+            }
+
+           var res1=$('#desc_search').val()
+           if(res1==''){
+                $.showDialog({
+                    title: "请输入要查询的中文描述!",
+                    type: "alert"
+                }); 
+                $('#desc_search').focus();
+                return false;
+           }
+           $(window).attr('location','/faultInquiryDescList.html?search_desc='+res1);
+        })
+
+        function desc_tip(){
+            $.ajax({
+                type: "post",
+                url: api_url+ "search/search/descr",
+                async: true,
+                data: {},
+                dataType: 'jsonp',
+                success: function (data) {   
+                  console.log(data.response_data);
+                  
+                  var lists = data.response_data.lists;
+                  for (var i = 0; i < lists.length; i++) {                                                 
+                     $('#desc_tip').append('<li>'+lists[i].information +'</li>');  
+                  }                                          
+                },
+                error: function () {                    
+                }
+
+            });   
+        }
+
+        function code_tip(){
+            $.ajax({
+                type: "post",
+                url: api_url+ "search/search/dtc",
+                async: true,
+                data: {},
+                dataType: 'jsonp',
+                success: function (data) {   
+                  console.log(data.response_data);
+
+                  var lists = data.response_data.lists;
+                  for (var i = 0; i < lists.length; i++) {                                                 
+                     $('#code_tip').append('<li>'+lists[i].information +'</li>');  
+                  } 
+                },
+                error: function () {                    
+                }
+            });   
+        }
+
+    })
+    </script>
+
+    </body>
+</html>

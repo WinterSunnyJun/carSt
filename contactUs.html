@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>联系我们</title>
+</head>
+    <body class="contactUs-body-wrapper">
+    <div class="top">
+        <div class="top-back clearfix">
+            <a href="vipCenter.html">
+            <div class="top-back-img fl">
+                <img src="img/back-arrow-blue.png" alt="24*38">
+            </div>
+            <p class="top-back-text fl">返回</p>
+            </a>
+        </div>
+        <h3 class="top-title">联系我们</h3>
+    </div>
+    <div class="login-logo">
+        <img src="img/logo.png" alt="190*184">
+    </div>
+    <div class="weui-cells weui-cells_form bd-top-bottom">
+        <div class="weui-cell f14 con_tit">
+        车圣士
+        </div>
+        <div class="input-bottom-line"></div>
+        <div class="weui-cell f14 con_tel">
+            电话：0316-3314702
+        </div>
+        <div class="input-bottom-line"></div>
+        <div class="weui-cell f14 con_ads">
+            地址：北京东城区南京路四十三又二分之一路
+        </div>
+    </div>
+    <div class="contactUs-QRcode">
+       
+    </div>
+    <p class="contactUs-QRcode-text">扫描二维码关注我们</p>
+    <script>
+
+ $(function () {
+        loadAjax();
+
+        function loadAjax(){
+             $.ajax({
+                type: "post",
+                url: api_url+ "contact/contact/contact",
+                async: true,
+                data: {},
+                dataType: 'jsonp',
+                success: function (data) {   
+                  console.log(data.response_data);
+                  var res = data.response_data.lists[0]
+                  $('.con_tit').html(res.name)
+                  $('.con_tel').html('电话：'+res.telephone);
+                  $('.con_ads').html(' 地址：'+res.receiving);
+                  $('.contactUs-QRcode').append('<img src="'+img_api+res.url+'" alt="">');                
+                },
+                error: function () {
+                    
+                }
+
+            });         
+        }
+
+ })
+    </script>
+</body>
+</html>

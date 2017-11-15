@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>    
+    <title>故障查询列表</title>
+</head>
+    <body class="faultInquiry-body-wrapper">
+    <div class="layoutList-top">
+        <div class="layoutList-top-back clearfix">
+            <a href="faultInquiry.html">
+                <div class="top-back-img fl">
+                    <img src="img/layoutlist-back.png" alt="14*26">
+                </div>
+                <p class="top-back-text  fl">返回</p>
+            </a>
+        </div>
+        <div class="weui-search-bar weui-search-bar_focusing layout-search-bar" id="searchBar">
+            <form class="weui-search-bar__form layout-search-bar__form">
+                <div class="weui-search-bar__box layout-search-bar__box">
+                    <i class="layout-icon">
+                        <img src="img/fault-icon-code.png" alt="44*36">
+                    </i>
+                    <input type="search" class="weui-search-bar__input layout-search-input" id="faultInquiry_search" placeholder="请输入查询信息" required="">
+                </div>
+            </form>
+            <a id="query" class="weui-btn_layout weui-btn">查询</a>
+            <!--<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>-->
+        </div>
+    </div>
+    <div class="layoutList-body">
+        <ul class="weui-cells faultInquiryList-list">                 
+        </ul>
+    </div>
+
+    <script>
+    $(function(){
+
+        if(notNull(GetQueryString('search_code'))){            
+            $('#faultInquiry_search').val(GetQueryString('search_code'));
+            ajax_codeList();
+        }
+        else
+        {
+          
+            $.showDialog({
+                title: "请输入要查询的信息!",
+                type: "alert",
+                okCallback:function(){
+                    $('#faultInquiry_search').focus();                     
+                }
+            }); 
+        }
+
+        function ajax_codeList(){
+
+                $.ajax({
+                    url: api_url+'dtc/dtc/dtc',
+                    type: 'post',
+                    data: {
+                       dtc:$('#faultInquiry_search').val()
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) {
+                       var lists=data.response_data.lists;
+
+                        if(lists.length==0){
+                            $('.faultInquiryList-list').html('<h1 style="line-height:2.5;padding:25px;  ">未查询到相关信息</h1>')
+                        }
+                        else{             
+                         for (var i = 0; i < lists.length; i++) {                                                 
+    $('.faultInquiryList-list').append('<li class="weui-cell vip-arrow"> <a href="faultInquiryDetail.html?id='+lists[i].id+'"><div class="weui-cell__bd"> <h2 class="fcred">'+lists[i].dtc+'</h2> <p class="faultInquiryList-carType"><span>车型:</span>'+ lists[i].spn+'</p> <p class="faultInquiryList-system"><span>系统:</span>'+lists[i].fmi+'</p> <p class="faultInquiryList-des"><span>故障描述:</span>'+lists[i].description+'</p> </div> </a> </li>  ')
+                         }  
+                        }            
+                    },
+                    error: function () {
+                        btn.value = '网络链接错误！'
+                    }
+                });
+
+        }
+       
+
+    })
+    </script>
+
+
+    </body>
+</html>

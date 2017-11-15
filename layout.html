@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电路图查询</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+
+</head>
+<body class="layout-bd-wrapper">
+    <div class="weui-search-bar weui-search-bar_focusing layout-search-bar" id="searchBar">
+        <form class="weui-search-bar__form layout-search-bar__form">
+            <div class="weui-search-bar__box layout-search-bar__box">
+                <i class="layout-icon">
+                    <img src="img/layout-icon.png" alt="44*36">
+                </i>
+                <input type="search" class="weui-search-bar__input layout-search-input" id="name_search" placeholder="请输入查询信息" required="">
+            </div>
+        </form>
+        <a id="name_query" class="weui-btn_layout weui-btn">查询</a>
+    </div>
+    <div class="layout-dashed"></div>
+    <div class="layout-body">
+        <ul class="layout-list">          
+        </ul>
+    </div>
+    <script>
+        $(function () {
+            loadAjax();
+
+        $('#name_query').click(function(){
+            if (!getcookie('QCUSS')) {
+                $(window).attr('location','/login.html');
+                return
+            }
+
+           var res=$('#name_search').val()
+           if(res==''){
+                // alert('请输入要查询的代码!');
+                $.showDialog({
+                    title: "请输入要查询的信息!",
+                    type: "alert"
+                }); 
+                $('#name_search').focus();
+                return false;
+           }
+           $(window).attr('location','/dataList.html?search_data='+res);
+        })
+
+
+            function loadAjax() {
+                $.ajax({
+                    type: "post",
+                    url:api_url+"circuitdata/circuitdata/circuitdata",
+                    async: true,
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        console.log(data.response_data.lists);
+                        var lists=data.response_data.lists;
+                        var str1 = '';
+
+                        for (var z = 0; z <lists.length; z++) {
+                            if(z==0){
+                            str1='<li class="active" data-id="'+lists[z].id+'"><a href="javascript:;">'+ lists[z].name +' </a><ol class="layout-list-sub" style="display:block"></ol></li>';
+                            }else{
+                            str1+='<li data-id="'+lists[z].id+'"><a href="javascript:;">'+ lists[z].name +' </a><ol class="layout-list-sub"></ol></li>';
+                            }
+                        }                     
+
+                        $('.layout-list').html(str1)
+                        $(document).on('click','.layout-list li',function(){
+                            var id = $(this).data('id')
+                            $(this).addClass('active').siblings().removeClass('active');
+                            $(this).siblings().find('.layout-list-sub').hide();                          
+                            $(this).find('.layout-list-sub').show();
+                            var that = $(this);
+                            $.ajax({
+                                type: "post",
+                                url:api_url+"circuitdata/circuitdata/circuitdatas",
+                                async: true,
+                                dataType: 'jsonp',
+                                data:{
+                                    pid:id
+                                },
+                                success: function (data) {
+                                    var twoLists =data.response_data.lists;
+                                    var str='';
+                                    for(var z= 0;z<twoLists.length;z++){
+                                        str+=' <li><a href="dataList.html?search_id='+twoLists[z].id+'">'+twoLists[z].name+'</a></li>'
+                                    }
+                                    console.log(that.find('.layout-list-sub'))
+                                  that.find('.layout-list-sub').html(str);
+                                }
+                            })
+                        })
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        })
+    </script>
+</body>
+</html>

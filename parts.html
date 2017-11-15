@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>配件</title>
+</head>
+    <body class="faultInquiry-body-wrapper">
+    <div class="parts-tab weui-tab">
+        <div class="weui-navbar parts-navbar">
+                <div class="weui-navbar__item  parts-bar-item-active"><a href="parts.html">部件信息</a></div>
+                <div class="weui-navbar__item"><a href="complement.html">配套信息</a></div>
+        </div>
+    </div>
+    <div class="login-logo">
+        <img src="img/logo.png" alt="190*184">
+    </div>
+    <div class="weui-search-bar faultInquiry-search-bar" id="searchBar">
+        <form class="weui-search-bar__form ">
+            <div class="weui-search-bar__box faultInquiry-search-bar__box">
+                <i class="faultInquiry-icon">
+                    <img src="img/partsGear.png" alt="44*42">
+                </i>
+                <input id="part_search" type="search" class="weui-search-bar__input  faultInquiry-search-bar__input" placeholder="请输入部件查询" required="">
+            </div>
+        </form>
+    </div>
+    <div class="weui-btn-area">
+        <a id="part_query" class="weui-btn weui-btn_blue" id="parts_sub">立刻查询</a>
+    </div>
+    <ul class="faultInquiry-list" id="part_tip">
+       
+
+    </ul>
+    </body>
+<script>
+
+    $(function(){
+
+        part_tip();
+        
+        $('#part_query').click(function(){
+            if (!getcookie('QCUSS')) {
+                $(window).attr('location','/login.html');
+                return
+            }
+
+           var res=$('#part_search').val()
+           if(res==''){
+                // alert('请输入要查询的代码!');
+                $.showDialog({
+                    title: "请输入要查询的部件信息!",
+                    type: "alert"
+                }); 
+                $('#part_search').focus();
+                return false;
+           }
+           $(window).attr('location','/partsList.html?search_part='+res);
+        })
+
+
+        function part_tip(){
+            $.ajax({
+                type: "post",
+                url: api_url+ "search/search/partlist",
+                async: true,
+                data: {},
+                dataType: 'jsonp',
+                success: function (data) {   
+                  console.log(data.response_data);
+                  var lists = data.response_data.lists;
+                  for (var i = 0; i < lists.length; i++) {                                                 
+                     $('#part_tip').append('<li>'+lists[i].information +'</li>');  
+                  }  
+                 
+                },
+                error: function () {                    
+                }
+            });   
+        }
+
+
+
+    })
+    </script>
+</html>

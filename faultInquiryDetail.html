@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>故障查询详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>  
+    <script src="js/js.js"></script>
+</head>
+<body class="layoutDetail-bd-wrapper">
+    <div class="top-blue">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <p class="fcfff" id="tit"></p>
+            </div>
+            <div class="weui-cell__bd"></div>
+            <div class="weui-cell__ft">
+                <a href="/faultInquiry.html">
+                    <img class="layoutDetail-back" src="img/layout-back.png" alt="44*36"/>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell bd-bottom">
+        <div class="weui-cell__hd faultInquiryDetail-title">
+            故障码:
+        </div>
+        <div  id="gz_bianma" class="weui-cell__bd">
+           
+        </div>
+    </div>
+    <div class="weui-cell bd-bottom">
+        <div class="weui-cell__hd faultInquiryDetail-title">
+            故障描述:
+        </div>
+        <div id="gz_miaoshu" class="weui-cell__bd">
+        
+        </div>
+    </div>
+    <article class="weui-article bd-bottom">
+        <h2 class="faultInquiryDetail-title">可能症状:</h2>
+        <p id="gz_zhengzhuang" ></p>
+    </article>
+    <article class="weui-article bd-bottom">
+        <h2 class="faultInquiryDetail-title">可能原因:</h2>
+        <ul >
+            <li id="gz_yuanyin"></li>
+          
+        </ul>
+    </article>
+    <article class="weui-article">
+        <h2 class="faultInquiryDetail-title">排查步骤:</h2>
+        <ul>
+            <li id="gz_buzhou"></li>
+          
+        </ul>
+
+    </article>
+
+    <script>
+ $(function(){
+    load();
+    function load(){
+
+        $.ajax({
+                    url: api_url+'/dtc/dtc/xdescr',
+                    type: 'get',
+                    data: {
+                       id:GetQueryString('id')
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        var list=data.response_data.lists[0];                        
+                        console.log(list) 
+                        $('#tit').html(list.spn)
+                        $('#gz_bianma').html(list.dtc)
+                        $('#gz_miaoshu').html(list.description)
+                        $('#gz_zhengzhuang').html(list.result)
+                        $('#gz_yuanyin').html(list.reason)
+                        $('#gz_buzhou').html(list.method)
+                    },
+                    error: function () {
+                        btn.value = '网络链接错误！'
+                    }
+                });
+
+
+    }
+
+ })
+
+    </script>
+
+</body>
+</html>

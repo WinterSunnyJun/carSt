@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">    
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>会员中心</title>
+</head>
+<body class="vipCenter-body-wrapper">
+<div class="weui-cell bg-fff bd-top-bottom mt20">
+    <div class="weui-cell__hd">
+        <img class="vipPhoto-img" src="img/vip-photo.png" alt="98*98">
+    </div>
+    <div class="weui-cell__bd">
+        <p class="vip-name">孔工</p>
+        <p class="vip-job"><span>工种&nbsp;:&nbsp;</span></p>
+    </div>
+</div>
+<div class="weui-cells bd-top-bottom">
+    <div class="weui-cell vip-arrow">
+        <a href="personalData.html">
+        <div class="weui-cell__hd">
+            <img class="vip-icon" src="img/vip-geren.png" alt="45*45"/>
+        </div>
+        <div class="weui-cell__bd">
+            个人资料
+        </div>
+        </a>
+    </div>
+    <div class="input-bottom-line"></div>
+    <div class="weui-cell vip-arrow">
+        <a href="feedback.html">
+        <div class="weui-cell__hd">
+            <img class="vip-icon" src="img/vip-yijian.png" alt="45*45"/>
+        </div>
+        <div class="weui-cell__bd">
+            意见反馈
+        </div>
+        </a>
+    </div>
+    <div class="input-bottom-line"></div>
+    <div class="weui-cell vip-arrow">
+        <a href="contactUs.html">
+        <div class="weui-cell__hd">
+            <img class="vip-icon" src="img/vip-link.png" alt="45*45"/>
+        </div>
+        <div class="weui-cell__bd">
+            联系我们
+        </div>
+        </a>
+    </div>
+</div>
+<div class="weui-btn-area vipCenter-btn">
+    <a id="outlogin" class="weui-btn weui-btn_blue">退出登录</a>
+</div>
+<script>
+   $(function(){
+      
+        load();
+
+        $('#outlogin').click(function () { 
+            outlogin();
+        })
+            
+
+        function load(){
+                $.ajax({
+                    type: "post",
+                    url: api_url+ "user/user/luser",
+                    async: true,
+                    data: {
+                        // id:GetQueryString('id')
+                        id:1
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) { 
+                        console.log(data.response_data.lists[0]);
+                        var res=data.response_data.lists[0];
+                        $('.vip-name').html(res.name)
+                        $('.vip-job').append(res.telephone)
+                        // $('#wxid').val(res.wechat)
+                        // $('#ads').val(res.receiving)
+                        // $('#type').val(res.type)      
+                    },
+                    error: function () {                    
+                    }
+                })
+        }
+
+        function outlogin(){
+
+                $.ajax({
+                    type: "post",
+                    url: api_url+ "user/user/logout",
+                    async: true,
+                    data: {
+                       
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) {                        
+
+                        $.showDialog({
+                            title: "退出成功!",
+                            type: "alert",
+                            okCallback:function(){
+                                   $(window).attr('location','/login.html');             
+                            }
+                        }); 
+                     
+                    },
+                    error: function () {                    
+                    }
+                })
+            }
+        })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配件列表</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/js.js"></script>
+</head>
+<body class="layoutList-bd-wrapper">
+    <div class="layoutList-top">
+        <div class="layoutList-top-back clearfix">
+            <a href="parts.html">
+                <div class="top-back-img fl">
+                    <img src="img/layoutlist-back.png" alt="14*26">
+                </div>
+                <p class="top-back-text  fl">返回</p>
+            </a>
+        </div>
+        <div class="weui-search-bar weui-search-bar_focusing layout-search-bar" id="searchBar">
+            <form class="weui-search-bar__form layout-search-bar__form">
+                <div class="weui-search-bar__box layout-search-bar__box">
+                    <i class="layout-icon">
+                        <img src="img/partsGear.png" alt="44*36">
+                    </i>
+                    <input type="search" class="weui-search-bar__input layout-search-input" id="searchInput" placeholder="请输入查询信息" required="">
+                </div>
+            </form>
+            <a id="" class="weui-btn_layout weui-btn cheshengshi_sub" style="display: block">查询</a>
+            <!--<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>-->
+        </div>
+    </div>
+    <div class="layoutList-body">
+        <ul class="weui-cells layoutList-list bujian_listul">
+           
+   
+        </ul>
+    </div>
+     <script>
+    $(function(){
+        if(notNull(GetQueryString('search_part'))){
+            // alert('code')
+            ajax_partList();
+        }
+        else
+        {
+            alert('请输入查询信息');   
+        }
+
+        function ajax_partList(){
+            $.ajax({
+                url: api_url+'partlist/partlist/partlist',
+                type: 'post',
+                data: {
+                   part_code:GetQueryString('search_part')
+                },
+                dataType: 'jsonp',
+                success: function (data) {
+                    var lists=data.response_data.lists;
+                if(lists.length!=0){
+                     for (var i = 0; i < lists.length; i++) { 
+
+$('.bujian_listul').append('<li class="weui-cell vip-arrow"><a href="partsDetail.html?id='+lists[i].id+'"> <div class="weui-cell__hd pr10"> 部件型号: </div> <div class="weui-cell__bd layoutList-item-text">'+lists[i].part_code+'</div> </a></li>')
+}
+                } else{
+
+$('.bujian_listul').append('<h1 style="line-height:2.5;padding:25px;  ">未查询到相关信息</h1>')
+
+                }
+                    
+                },
+                error: function () {
+                    btn.value = '网络链接错误！'
+                }
+            });
+
+        }        
+
+    })
+    </script>
+
+    <!-- <script>
+        $(function () {
+
+
+
+            // var part_code = $('#searchInput').val();
+            // loadAjax(part_code);
+            // $('.cheshengshi_sub').click(function () {
+            //     part_code = $('#searchInput').val();
+            //     loadAjax(part_code);
+            // })
+            // function loadAjax(part_code) {
+            //     $.ajax({
+            //         type: "post",
+            //         url:api_url + "partlist/partlist/partlist",
+            //         async: true,
+            //         data: {
+            //             part_code:part_code
+            //         },
+            //         dataType: 'jsonp',
+            //         success: function (data) {
+            //             console.log(data.response_data.lists);
+            //             var lists=data.response_data.lists;
+            //             for (var z = 0; z <lists.length; z++) {
+            //                 $('.layoutList-list').append('<li class="weui-cell vip-arrow"><a href="partsDetail.html"><div class="weui-cell__hd pr10">'+ lists[z].part_name + ':' +'</div><div class="weui-cell__bd layoutList-item-text">'
+            //                     +lists[z].part_code+'</div></a></li>');
+            //             }
+            //         },
+            //         error: function () {
+            //         }
+            //     });
+            // }
+        })
+    </script> -->
+</body>
+</html>

@@ -1,0 +1,633 @@
+/*公共样式*/
+body,
+html,
+div,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+ul,
+ol,li,
+p,b,
+dl,dt,dd,
+table,th,td,
+textarea,button,
+select{
+    margin: 0;
+    padding: 0;
+    font-size: 15px; 
+}
+body{
+    overflow-x: hidden;
+}
+.w100{
+    width: 100%;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clear{clear: both;}
+.clearfix:after{
+    content: '';
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0px;
+}
+select.weui-select { height:1.41176471em; line-height: 1.41176471em; }
+a{text-decoration: none;}
+ul li,
+ol li{
+    list-style: none;
+}
+img{
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+.mt0{
+    margin-top: 0;
+}
+.mt20{
+    margin-top: 20px;
+}
+.bg-fff{
+    background-color: #ffffff;
+}
+.bg-f5{
+    background-color: #f5f5f5;
+}
+.bd-top-bottom{
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+}
+.bd-bottom{
+    border-bottom: 1px solid #d9d9d9;
+}
+.tr{
+    text-align: right;
+}
+.f14{
+    font-size: 14px;
+}
+.fc000{
+    color: #000000;
+}
+.fcfff{
+    color: #ffffff;
+}
+.fcred{
+    color: red;
+}
+.pr10{
+    padding-right: 10px;
+}
+/*顶部*/
+.top{
+    position: relative;
+    width: 100%;
+    padding: 12px 2%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d9d9d9;
+    background: #ffffff;
+}
+.top-back{
+    position: absolute;
+    left: 2%;
+    top: 50%;
+    margin-top: -10px;
+}
+.top-back-img{
+    width: 12px;
+    height: 20px;
+}
+.top-back-text{
+    margin-left: 4px;
+    line-height: 20px;
+    color: #1e77d3;
+    font-size: 14px;
+}
+.top-title{
+    width: 100%;
+    line-height: 20px;
+    color: #1e77d3;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/*申请会员*/
+.apply-body-wrapper{
+    background: #f5f5f5;
+}
+.apply-body{
+    margin-top: 20px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+}
+.apply-input{
+    margin-top: 0;
+    border-bottom: 1px solid #d9d9d9;
+}
+.apply-textarea{
+    margin-top: 0;
+}
+.apply-btn{
+    margin-top: 80px;
+}
+.weui-btn_blue{
+    background: #1e77d3;
+}
+/*会员登录*/
+.login-body-wrapper{
+    background: #f5f5f5;
+}
+.login-logo{
+    width: 95px;
+    height: 92px;
+    margin: 44px auto;
+}
+.login-label{
+    width: 20px;
+}
+.login-input-img{
+    width: 12px;
+    height: 18px;
+    vertical-align: middle;
+}
+.login-form{
+    margin: 0 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+}
+.login-yzm{
+    flex: 1;
+}
+.input-bottom-line{
+    margin: 0 auto;
+    width: 95%;
+    height: 1px;
+    background: #D9D9D9;
+}
+.login-signUp{
+    margin: 0 auto;
+    display: block;
+    width: 94%;
+    font-size: 14px;
+    color: #1e77d3;
+    text-align: right;
+}
+/*会员中心*/
+.vipCenter-body-wrapper{
+    background: #f5f5f5;
+}
+.vipPhoto-img{
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+}
+.vip-name{
+    font-size: 16px;
+}
+.vip-job{
+    font-size: 14px;
+}
+.vip-icon{
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.vip-arrow .weui-cell__bd {
+    position: relative;
+}
+/*.vip-arrow .weui-cell__bd:after {*/
+    /*content: " ";*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*width: 1px;*/
+    /*bottom: 0;*/
+    /*border-right: 1px solid #D9D9D9;*/
+    /*color: #D9D9D9;*/
+    /*-webkit-transform-origin: 100% 0;*/
+    /*transform-origin: 100% 0;*/
+    /*-webkit-transform: scaleX(0.5);*/
+    /*transform: scaleX(0.5);*/
+/*}*/
+.vip-arrow .weui-cell__bd:before {
+    content: " ";
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: relative;
+    top: -2px;
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    margin-top: -4px;
+}
+.vipCenter-btn{
+    margin-top: 200px;
+}
+.vip-arrow > a{
+    display: -webkit-box;
+    width: 100%;
+    color: #000;
+}
+/*个人资料*/
+.personalData-arrow .weui-cell__bd:before {
+    content: " ";
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    /*-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);*/
+    /*transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);*/
+    transform:rotate(135deg);
+    position: relative;
+    top: -2px;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    margin-top: -4px;
+
+}
+/*联系我们*/
+.contactUs-body-wrapper{
+    background-color: #f5f5f5;
+}
+.contactUs-QRcode{
+    width: 90px;
+    height: 90px;
+    margin: 20px auto;
+}
+.contactUs-QRcode-text{
+    text-align: center;
+}
+/*意见反馈*/
+.feedback-body-wrapper{
+    background-color: #f5f5f5;
+}
+.feedback-btn{
+    margin-top: 120px;
+}
+/*电路图查询*/
+.layout-bd-wrapper{
+    background: #f5f5f5;
+}
+.layout-icon{
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 22px;
+    height: 18px;
+    padding-top: 10px;
+}
+.weui-btn_layout{
+   background: #1e77d3;
+}
+.layout-search-input{
+    padding: 10px 0 !important;
+    padding-left: 10px !important;
+    margin-left: 10px !important;
+}
+.layout-search-bar{
+    background: #ffffff;
+}
+.layout-search-bar__box{
+    width: 95%;
+    border: 1px solid #d9d9d9;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+.layout-search-bar__form:after{
+    border: none;
+    border-radius: 0;
+}
+.layout-dashed{
+    width: 80%;
+    margin: 10px auto;
+    height: 1px;
+    border: 1px dashed #bebebe;
+}
+.layout-body{
+    width: 100%;
+    background: #f2f2f2;
+    border-top: 1px solid #d9d9d9;
+}
+.layout-list{
+    position: relative;
+    width: 33.33%;
+    border-top: 4px solid #1286fd;
+    border-right: 1px solid #D9D9D9;
+    background: #ffffff;
+}
+.layout-list > li{
+    width: 95%;
+    padding: 15px 0;
+    border-bottom: 1px solid#D9D9D9;
+    text-align: center;
+}
+.layout-list > li.active > a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 15px 6% 15px 0;
+    background: #f5f5f5;
+}
+.layout-list > li.active{
+    padding: 0;
+}
+.layout-list > li a{
+    color: #000000;
+    font-size: 14px;
+}
+.layout-list-sub{
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 100%;
+}
+.layout-list-sub > li{
+    width: 200%;
+    padding: 15px 0;
+    border-bottom: 1px solid#D9D9D9;
+    text-align: left;
+    text-indent: 32px;
+    margin-left: 8px;
+}
+.layout-list-sub > li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #000000;
+    font-size: 14px;
+}
+/*电路图查询列表*/
+.layoutList-top{
+    position: relative;
+}
+.layoutList-top-back{
+    position: absolute;
+    left: 2%;
+    top: 32%;
+    z-index: 2;
+}
+.layout-search-bar{
+    padding: 8px 10px 8px 14%;
+}
+.layoutList-top-back .top-back-text{
+    color: #000000;
+    font-size: 14px;
+}
+.layoutList-top-back .top-back-img{
+    width: 8px;
+    height: 16px;
+}
+.layoutList-bd-wrapper{
+    background: #f5f5f5;
+}
+.layoutList-item-pic{
+    width: 35px;
+    height: 40px;
+    margin-right: 10px;
+}
+.layoutList-list{
+    margin-top: 0;
+}
+.layoutList-item-title{
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.layoutList-item-memory{
+    font-size: 12px;
+    color: #666;
+}
+.layoutList-item-text{
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+.layoutList-list li{
+    border-bottom: 1px solid #D9D9D9;
+}
+.layoutList-list a{
+    color: #000000;
+}
+/*电路图查询详情*/
+.layoutDetail-bd-wrapper{
+    background: url("../img/layout-bg.png")no-repeat;
+    background-size: cover;
+}
+.top-blue{
+    background: #1e77d3;
+}
+.layoutDetail-back{
+    width: 22px;
+    height: 18px;
+}
+/*故障查询*/
+.faultInquiry-body-wrapper{
+    background: #f5f5f5;
+}
+.faultInquiry-search-bar{
+    position: static;
+    background-color: #f5f5f5;
+}
+.faultInquiry-icon{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 22px;
+    height: 20px;
+    margin-right: 10px;
+}
+.faultInquiry-icon-book{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 22px;
+    margin-right: 10px;
+}
+.faultInquiry-search-bar__input{
+    padding: 10px 0 !important;
+}
+.faultInquiry-search-bar__box{
+    padding-left: 45px;
+}
+.faultInquiry-list{
+    width: 80%;
+    margin: 15px auto 30px;
+    padding: 0 10px;
+}
+.faultInquiry-list,
+.faultInquiry-list li{
+    font-size: 14px;
+    list-style-type: disc;
+}
+.faultInquiryList-list{
+    margin-top: 0;
+}
+.faultInquiryList-list li{
+    border-bottom: 1px solid #D9D9D9;
+}
+.faultInquiryList-list a{
+    color: #000000;
+}
+.faultInquiryList-list h2{
+    font-weight: 500;
+}
+.faultInquiryList-list p{
+    font-size: 14px;
+    color: #666666;
+}
+/*故障查询详情*/
+.faultInquiryDetail-title{
+    color: #1e77d3;
+    font-size: 18px;
+}
+/*配件*/
+.parts-tab .weui-navbar{
+    position: static;
+}
+.parts-tab .weui-navbar__item{
+    padding: 0;
+}
+.parts-navbar a{
+    display: block;
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+    padding: 13px 0;
+    color: #000000 !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.parts-bar-item-active a{
+    color: #1e77d3 !important;
+    background: url("../img/parts-tab-bg.png")no-repeat bottom center;
+}
+/*配件详情*/
+.partsDetail-bd-wrapper{
+    background: #f5f5f5;
+}
+.partsDetail-weui-cells-bg{
+    background: url("../img/layout-bg.png")no-repeat;
+}
+/*配套详情*/
+.comDetial-list{
+    margin: 10px auto;
+    width: 90%;
+    border: 1px solid #D9D9D9;
+    background: rgba(245,245,245,.6);
+}
+.comDetial-list li{
+    width: 100%;
+    line-height: 40px;
+    border-bottom: 1px solid #D9D9D9;
+}
+.comDetial-list li:after{
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.comDetail-name{
+    float: left;
+    width: 40%;
+    border-right: 1px solid #D9D9D9;
+    text-indent: 20px;
+}
+.comDetail-type{
+    float: left;
+    width: 59%;
+    text-indent: 20px;
+}
+.comDetail-type a{
+    text-decoration: underline;
+}
+/*配套*/
+.complement-search-bar{
+    padding: 8px 10px 8px 5%;
+    background: #ffffff;
+}
+.complement-weui-cells .weui-search-bar:after{
+    border-bottom: none;
+}
+.complement-list{
+    width: 100%;
+    background: #ffffff;
+}
+.complement-list ul li{
+    float: left;
+    width: 24.7%;
+    border-bottom: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+}
+.complement-list ul li:nth-child(4n){
+    border-right: 0;
+}
+.complement-item-pic{
+    width: 80px;
+    height: 70px;
+    margin: 5px auto;
+}
+.complement-item-text{
+    text-align: center;
+    line-height: 28px;
+}
+/*资料*/
+.data-list{
+    width: 100%;
+    background: #ffffff;
+}
+.data-list ul li{
+    float: left;
+    width: 33.33%;
+}
+.data-item-pic{
+    width: 80px;
+    height: 70px;
+    margin: 5px auto;
+}
+.data-item-text{
+    text-align: center;
+    line-height: 28px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

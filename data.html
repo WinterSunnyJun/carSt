@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>资料查询</title>
+</head>
+    <body class="faultInquiry-body-wrapper">
+    <div class="login-logo">
+        <img src="img/logo.png" alt="190*184">
+    </div>
+    <div class="weui-cells bd-top-bottom complement-weui-cells">
+        <div class="weui-search-bar weui-search-bar_focusing complement-search-bar " id="searchBar">
+            <form class="weui-search-bar__form layout-search-bar__form">
+                <div class="weui-search-bar__box layout-search-bar__box">
+                    <i class="layout-icon">
+                        <img src="img/complement.png" alt="44*36">
+                    </i>
+                    <input id="data_search" type="search" class="weui-search-bar__input layout-search-input" placeholder="请输入查询信息" required="">
+                </div>
+            </form>
+            <a id="data_query" class="weui-btn_layout weui-btn">查询</a>
+        </div>
+        <ul class="faultInquiry-list" id="data_tip">
+           
+        </ul>
+    </div>
+    <div class="layout-dashed"></div>
+    <div class="data-list bd-top-bottom">
+        <ul class="clearfix">
+            <li><a href="dataList.html?search_data=车型处理" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data1.png" alt="160*140">
+                </div>
+                <p class="data-item-text">车型处理</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=后处理" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data2.png" alt="160*140">
+                </div>
+                <p class="data-item-text">后处理</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=天然气" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data3.png" alt="160*140">
+                </div>
+                <p class="data-item-text">天然气</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=发动机" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data4.png" alt="160*140">
+                </div>
+                <p class="data-item-text">发动机</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=工程机械" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data5.png" alt="160*140">
+                </div>
+                <p class="data-item-text">工程机械</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=ECV模板内控" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data6.png" alt="160*140">
+                </div>
+                <p class="data-item-text">ECV模板内控</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=底盘" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data7.png" alt="160*140">
+                </div>
+                <p class="data-item-text">底盘</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=ATM自动挡" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data8.png" alt="160*140">
+                </div>
+                <p class="data-item-text">ATM自动挡</p>
+            </a></li>
+            <li><a href="dataList.html?search_data=其他" class="fc000">
+                <div class="data-item-pic">
+                    <img src="img/data9.png" alt="160*140">
+                </div>
+                <p class="data-item-text">其他</p>
+            </a></li>
+        </ul>
+
+    </div>
+    </body>
+
+    <script>
+
+    $(function(){
+
+        part_tip();
+        
+        $('#data_query').click(function(){
+           var res=$('#data_search').val()
+           if(res==''){
+                $.showDialog({
+                    title: "请输入要查询的资料信息!",
+                    type: "alert"
+                }); 
+                $('#data_search').focus();
+                return false;
+           }
+           $(window).attr('location','/dataList.html?search_data='+res);
+        })
+
+
+        function part_tip(){
+            $.ajax({
+                type: "post",
+                url: api_url+ "search/search/datum",
+                async: true,
+                data: {},
+                dataType: 'jsonp',
+                success: function (data) {   
+                  console.log(data.response_data);
+                  var lists = data.response_data.lists;
+                  for (var i = 0; i < lists.length; i++) {                                                 
+                     $('#data_tip').append('<li>'+lists[i].information +'</li>');  
+                  }                 
+
+                },
+                error: function () {                    
+                }
+            });   
+        }
+
+    })
+    </script>
+
+
+
+
+</html>

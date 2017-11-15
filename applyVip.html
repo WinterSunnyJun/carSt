@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>申请会员</title>
+</head>
+<body class="apply-body-wrapper">
+<div class="top">
+    <div class="top-back clearfix">
+        <a href="javascript:history.go(-1)">
+        <div class="top-back-img fl">
+            <img src="img/back-arrow-blue.png" alt="24*38">
+        </div>
+        <p class="top-back-text fl">返回</p>
+        </a>
+    </div>
+    <h3 class="top-title">申请会员</h3>
+</div>
+<div class="apply-body weui-cells-form">
+    <div class="weui-cells apply-input">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input id="user-name" class="weui-input" type="text" placeholder="请填写您的姓名（必填）">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells apply-input">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input id="phone" class="weui-input" type="number" pattern="[0-9]*" placeholder="请填写您的手机号（必填）">               
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells apply-input">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input id="user-wechat" class="weui-input" type="text" placeholder="请填写您的微信号">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells apply-input">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label for class="weui-label">地区</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="" class="weui-input">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells apply-textarea">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea  class="weui-textarea" placeholder="请填写您的街道信息" name="" id="user-address" rows="8"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="weui-btn-area apply-btn" id="register">
+    <a id="send" class="weui-btn weui-btn_blue">提交申请</a>
+</div>
+<script>
+    $(function () {
+
+        $('#send').click(function () { 
+                if (false === checkParam()) {
+                    return false;
+                }  
+                send();
+        })    
+
+
+        function send(){          
+            var pdz = mysjh_jc($('#phone').val());
+            if(pdz==1){ 
+
+                    $.ajax({
+                        type: "post",
+                        url: api_url+ "user/user/user",
+                        async: true,
+                        data: {
+                            telephone:$('#phone').val(),
+                            name:$('#user-name').val(),
+                            wechat:$('#user-wechat').val(),
+                            receiving:$('#user-address').val(),
+                        },
+                        dataType: 'jsonp',
+                        success: function (data) { 
+                            if(data.error_msg){
+                                alert(data.error_msg)
+                            } else{
+
+                                console.log(data.response_data.lists)
+                                if(data.response_data.lists==1){
+                                    $.showDialog({
+                                        title: "申请成功!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                            $(window).attr('location','/login.html'); 
+                                        }
+                                    });
+                                }else if(data.response_data.lists==2){
+                                    $.showDialog({
+                                        title: "请输入微信号!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                             window.location.reload(); 
+                                        }
+                                    }); 
+                                }else if(data.response_data.lists==3){
+                                    $.showDialog({
+                                        title: "请输入姓名!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                             window.location.reload(); 
+                                        }
+                                    }); 
+
+                                }else if(data.response_data.lists==4){
+                                    $.showDialog({
+                                        title: "请输入手机号!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                             window.location.reload(); 
+                                        }
+                                    }); 
+                                }else if(data.response_data.lists==5){
+                                    $.showDialog({
+                                        title: "请输入街道信息!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                             window.location.reload(); 
+                                        }
+                                    }); 
+                                }else if(data.response_data.lists==6){
+                                    $.showDialog({
+                                        title: "用户已存在!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                             window.location.reload(); 
+                                        }
+                                    }); 
+                                }else{
+                                    $.showDialog({
+                                        title: "网络错误!",
+                                        type: "alert",
+                                        okCallback: function() {                                      
+                                            $(window).attr('location','/vipCenter.html'); 
+                                        }
+                                    }); 
+
+                                }
+                            }                         
+                                          
+                        },
+                        error: function () {                    
+                        }
+
+                    });                
+            }
+            else{
+
+                $.showDialog({
+                    title: "请输入正确的手机号!",
+                    type: "alert"
+                }); 
+            }
+
+
+        }
+
+        function checkParam() {
+            if ($('#user-name').val() == '') {
+                $.showDialog({
+                    title: "请输入姓名!",
+                    type: "alert"
+                });
+                $('#user-name').focus();
+                return false;
+            }
+
+            if ($('#phone').val() == '') {
+                $.showDialog({
+                    title: "请输入手机号!",
+                    type: "alert"
+                }); 
+                $('#phone').focus();
+                return false;
+            }
+           
+            if ($('#user-wechat').val() == '') {
+                $.showDialog({
+                    title: "请输入微信号!",
+                    type: "alert"
+                });
+                $('#user-wechat').focus();
+                return false;
+            }
+            
+            if ($('#user-address').val() == '') {
+                $.showDialog({
+                    title: "请输入街道信息!",
+                    type: "alert"
+                });
+                $('#user-address').focus();
+                return false;
+            }
+
+            
+        }
+
+
+
+    })
+</script>
+</body>
+</html>

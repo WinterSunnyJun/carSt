@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>会员登录</title>
+</head>
+<body class="login-body-wrapper">
+    <div class="login-logo">
+        <img src="img/logo.png" alt="190*184">
+    </div>
+    <div class="weui-cells weui-cells_form login-form">
+        <div class="weui-cell ">
+            <div class="weui-cell__hd">
+                <label class="weui-label login-label"><img class="login-input-img" src="img/login-pho.png" alt="24*36"></label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id="phone" class="weui-input" type="tel" placeholder="请输入手机号">
+            </div>
+        </div>
+        <div class="input-bottom-line"></div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label login-label"><img class="login-input-img" src="img/login-lock.png" alt="24*36"></label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id="code" class="weui-input" type="" placeholder="请输入验证码">
+            </div>
+            <div class="weui-cell__ft login-yzm">
+            <img class="weui-vcode-img" />
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area login-btn" id="login-btn">
+        <a id="login" class="weui-btn weui-btn_blue">登录</a>
+    </div>
+    <a href="applyVip.html" class="login-signUp">注册账号</a>
+
+    <script>
+        $(function(){              
+            $('#login-btn').click(function () { 
+                if (false === checkParam()) {
+                    return false;
+                }  
+                login();
+            })
+            
+            getCode();
+            $('.login-yzm img').click(function(){
+                getCode()
+            })
+        })
+
+        function login(){ 
+
+            var pdz = mysjh_jc($('#phone').val());
+            if(pdz==1){ 
+
+                    $.ajax({
+                        type: "post",
+                        url: api_url+ "user/login/login",
+                        async: true,
+                        data: {
+                            telephone:$('#phone').val(),
+                            do_code:$('#code').val()
+                        },
+                        dataType: 'jsonp',
+                        success: function (data) { 
+                            console.log(data.error_msg); 
+                            console.log(data.error_code); 
+                        
+                            if(data.error_msg){
+                              
+                                $.showDialog({
+                                    title: data.error_msg,
+                                    type: "alert"
+                                }); 
+
+                            } else{
+
+                                $.showDialog({
+                                    title: "登陆成功!",
+                                    type: "alert"
+                                });
+                             //   sessionStorage.setItem('login', '1')
+                                $(window).attr('location','/vipCenter.html');                               
+                            }
+                            console.log(data.error_code);  
+                                          
+                        },
+                        error: function () {                    
+                        }
+
+                    });                
+            }
+            else{
+
+                $.showDialog({
+                    title: "请输入正确的手机号!",
+                    type: "alert"
+                }); 
+            }
+        }
+        // 获取手机验证码图片
+        function getCode(){
+            $('.login-yzm img').attr('src',api_url+'user/login/do_code?flag='+Math.random())
+        }
+
+        function checkParam() {
+            if ($('#phone').val() == '') {
+                $.showDialog({
+                    title: "请输入手机号!",
+                    type: "alert"
+                }); 
+                $('#phone').focus();
+                return false;
+            }
+            if ($('#code').val() == '') {
+                $.showDialog({
+                    title: "请输入验证码!",
+                    type: "alert"
+                });
+                $('#code').focus();
+                return false;
+            }
+        }
+        
+    </script>
+</body>
+</html>

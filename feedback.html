@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">     
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <title>意见反馈</title>
+</head>
+    <body class="feedback-body-wrapper">
+    <div class="top">
+        <div class="top-back clearfix">
+            <a href="vipCenter.html">
+            <div class="top-back-img fl">
+                <img src="img/back-arrow-blue.png" alt="24*38">
+            </div>
+            <p class="top-back-text fl">返回</p>
+            </a>
+        </div>
+        <h3 class="top-title">意见反馈</h3>
+    </div>
+    <div class="weui-cells weui-cells_form mt0 bd-top-bottom">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+            您的反馈:
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea desc" id="desc" placeholder="在这里输入反馈" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <div class="weui-uploader__bd">
+                    <ul class="weui-uploader__files" id="uploaderFiles">
+                        <!-- <li class="weui-uploader__file" style="background-image:url(img/uploder.png);"></li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell bd-top-bottom">
+            <div class="weui-cell__hd">
+                <label for class="weui-label">姓名:</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id="name" type="text"  class="weui-input">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell bd-top-bottom">
+            <div class="weui-cell__hd">
+                <label for class="weui-label">电话:</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id='phone' type="number" class="weui-input">
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area feedback-btn">
+        <a id="send" class="weui-btn weui-btn_blue">提交</a>
+    </div>
+<script>
+   $(function(){
+      
+        $('#send').click(function () { 
+            if (false === checkParam()) {
+                return false;
+            }  
+            send();
+        })
+
+
+        function checkParam(){
+            if ($('.desc').val() == '') {
+                $.showDialog({
+                    title: "请输入反馈!",
+                    type: "alert"
+                }); 
+                $('.desc').focus();
+                return false;
+            }
+            if ($('#name').val() == '') {
+                $.showDialog({
+                    title: "请输入姓名!",
+                    type: "alert"
+                }); 
+                $('#name').focus();
+                return false;
+            }
+            if ($('#phone').val() == '') {
+                $.showDialog({
+                    title: "请输入手机号!",
+                    type: "alert"
+                }); 
+                $('#phone').focus();
+                return false;
+            }
+        }
+
+        function send(){ 
+            var pdz = mysjh_jc($('#phone').val());
+            if(pdz==1){ 
+                var img_url='';
+                // img_url=;                
+                $.ajax({
+                    type: "post",
+                    url: api_url+ "opinion/opinion/opinion",
+                    async: true,
+                    data: {
+                       url:img_url,
+                       content:$('#desc').val(),
+                       name:$('#name').val(),
+                       telephone:$('#phone').val()
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) { 
+                        console.log();
+                        if(data.response_data.lists==1){
+                            $.showDialog({
+                                title: "提交成功!",
+                                type: "alert",
+                                okCallback: function() {   
+
+                                     $(window).attr('location','/vipCenter.html');
+                                 }
+                            }); 
+                        }else if(data.response_data.lists==2){
+                             $.showDialog({
+                                title: "请输入反馈内容!",
+                                type: "alert"
+                             });
+                        }else if(data.response_data.lists==3){
+                             $.showDialog({
+                                title: "请输入姓名!",
+                                type: "alert"
+                             });
+                        }else if(data.response_data.lists==4){
+                             $.showDialog({
+                                title: "请输入手机号!",
+                                type: "alert"
+                             });
+                        }else{  
+                            $.showDialog({
+                                title: "网络错误",
+                                type: "alert"
+                            });
+
+                        }
+                       
+                    },
+                    error: function () {  
+                            $.showDialog({
+                                title: "网络错误",
+                                type: "alert"
+                            });           
+                    }
+                })
+            }else{
+                $.showDialog({
+                    title: "请输入正确的手机号!",
+                    type: "alert"
+                }); 
+            }
+
+        }
+
+
+    })
+</script>
+</body>
+</html>

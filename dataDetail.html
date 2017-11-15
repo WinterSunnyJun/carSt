@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资料详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/js.js"></script>
+</head>
+<body class="layoutDetail-bd-wrapper">
+    <div class="top-blue">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <p class="fcfff">车型处理</p>
+            </div>
+            <div class="weui-cell__bd"></div>
+            <div class="weui-cell__ft">
+                <a href="javascript:history.go(-1);">
+                    <img class="layoutDetail-back" src="img/layout-back.png" alt="44*36"/>
+                </a>
+            </div>
+        </div>
+    </div>
+    <article class="weui-article">
+     
+    </article>
+
+<script>
+ $(function(){
+    load();
+    function load(){
+        $.ajax({
+                    url: api_url+'datum/datum/datums',
+                    type: 'get',
+                    data: {
+                       id:GetQueryString('id')
+                    },
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        var list=data.response_data.lists[0];                        
+                        $('.weui-article').html(list.url)
+                        
+                    },
+                    error: function () {
+                        btn.value = '网络链接错误！'
+                    }
+                });
+    }
+ })
+</script>
+
+</body>
+</html>
